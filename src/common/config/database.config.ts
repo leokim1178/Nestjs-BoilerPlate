@@ -12,8 +12,6 @@ export class TypeOrmConfig implements TypeOrmOptionsFactory {
       options = connectionManager.get('default').options;
       await connectionManager.get('default').close();
     } else {
-      console.log('get Options to connect database');
-
       options = {
         type: 'postgres',
         host: process.env.PG_DB_HOST,
