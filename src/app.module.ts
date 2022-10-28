@@ -1,16 +1,23 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { TypeOrmConfig } from './common/config/database.config';
+import { MysqlConfig } from './common/config/mysql.config';
+import { PostgresqlConfig } from './common/config/postgresql.config';
 
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true, envFilePath: ['.env'] }),
     TypeOrmModule.forRootAsync({
-      inject: [ConfigModule],
-      useClass: TypeOrmConfig,
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useClass: PostgresqlConfig,
+    }),
+    TypeOrmModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useClass: MysqlConfig,
     }),
   ],
   controllers: [AppController],

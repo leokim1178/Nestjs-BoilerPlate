@@ -1,18 +1,21 @@
 import { Injectable } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { TypeOrmOptionsFactory } from '@nestjs/typeorm';
 import { DataSource, DataSourceOptions } from 'typeorm';
 
 @Injectable()
-export class TypeOrmConfig implements TypeOrmOptionsFactory {
+export class PostgresqlConfig implements TypeOrmOptionsFactory {
+  constructor(private readonly configService: ConfigService) {}
+
   async createTypeOrmOptions(): Promise<DataSourceOptions> {
     let options: DataSourceOptions;
     options = {
-      name: 'postgresql dataSource',
+      name: 'postgresql_DB',
       type: 'postgres',
-      host: process.env.PG_DB_HOST,
-      username: process.env.PG_DB_USER,
-      password: process.env.PG_DB_PASSWD,
-      database: process.env.PG_DB_NAME,
+      host: this.configService.get('PG_DB_HOST'),
+      username: this.configService.get('PG_DB_USER'),
+      password: this.configService.get('PG_DB_PASSWD'),
+      database: this.configService.get('PG_DB_NAME'),
       port: 5432,
       logging: true,
       autoLoadEntities: true,
