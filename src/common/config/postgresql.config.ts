@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { TypeOrmOptionsFactory } from '@nestjs/typeorm';
+import { PostgresEntities } from 'src/models/postgres/mysql.index';
 import { DataSource, DataSourceOptions } from 'typeorm';
 
 @Injectable()
@@ -19,7 +20,8 @@ export class PostgresqlConfig implements TypeOrmOptionsFactory {
       port: 5432,
       logging: true,
       autoLoadEntities: true,
-      synchronize: false,
+      entities: PostgresEntities,
+      synchronize: true,
     } as DataSourceOptions;
 
     const dataSource = new DataSource(options);
