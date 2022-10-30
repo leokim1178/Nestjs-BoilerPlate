@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { TypeOrmOptionsFactory } from '@nestjs/typeorm';
+import { mysqlEntities } from 'src/models/mysql/mysql.index';
 import { DataSource, DataSourceOptions } from 'typeorm';
 
 @Injectable()
@@ -18,8 +19,9 @@ export class MysqlConfig implements TypeOrmOptionsFactory {
       database: this.configService.get('MYSQL_DB_NAME'),
       port: 3306,
       logging: true,
+      entities: mysqlEntities,
       autoLoadEntities: true,
-      synchronize: false,
+      synchronize: true,
     } as DataSourceOptions;
 
     const dataSource = new DataSource(options);

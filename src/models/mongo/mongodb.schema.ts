@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 
 // mongoDB example schema
 @Schema({ timestamps: { createdAt: 'createdAt', updatedAt: 'updatedAt' } })
-export class User {
+export class MongoUser {
   @Prop()
   name: string;
 
