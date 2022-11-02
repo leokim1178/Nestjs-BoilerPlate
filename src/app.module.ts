@@ -12,9 +12,14 @@ import { MongoDBConfig } from './common/config/mongodb.config';
   imports: [
     ConfigModule.forRoot({ isGlobal: true, envFilePath: ['.env'] }),
     TypeOrmModule.forRootAsync({
+      name: 'postgresql_DB',
       useClass: PostgresqlConfig,
+      dataSourceFactory: () => {
+        return new PostgresqlConfig().postgresqlDataSource;
+      },
     }),
     TypeOrmModule.forRootAsync({
+      name: 'mysql_DB',
       useClass: MysqlConfig,
       dataSourceFactory: () => {
         return new MysqlConfig().mysqlDataSource;

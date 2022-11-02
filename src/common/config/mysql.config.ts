@@ -13,7 +13,6 @@ export class MysqlConfig implements TypeOrmOptionsFactory {
   async createTypeOrmOptions(): Promise<DataSourceOptions> {
     let options: DataSourceOptions;
     options = {
-      name: 'mysql_DB',
       type: 'mysql',
       host: process.env.MYSQL_DB_HOST,
       username: process.env.MYSQL_DB_USER,
@@ -23,7 +22,7 @@ export class MysqlConfig implements TypeOrmOptionsFactory {
       logging: true,
       entities: mysqlEntities,
       autoLoadEntities: true,
-      synchronize: true,
+      // synchronize: true,
     } as DataSourceOptions;
 
     const dataSource = new DataSource(options);
