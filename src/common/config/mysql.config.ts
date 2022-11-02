@@ -1,22 +1,24 @@
-import { Injectable } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
-import { TypeOrmOptionsFactory } from '@nestjs/typeorm';
+import {
+  TypeOrmDataSourceFactory,
+  TypeOrmOptionsFactory,
+} from '@nestjs/typeorm';
 import { mysqlEntities } from 'src/models/mysql/mysql.index';
 import { DataSource, DataSourceOptions } from 'typeorm';
 
-@Injectable()
 export class MysqlConfig implements TypeOrmOptionsFactory {
-  constructor(private readonly configService: ConfigService) {}
+  get mysqlDataSource() {
+    return this.createDataSource();
+  }
 
   async createTypeOrmOptions(): Promise<DataSourceOptions> {
     let options: DataSourceOptions;
     options = {
       name: 'mysql_DB',
       type: 'mysql',
-      host: this.configService.get('MYSQL_DB_HOST'),
-      username: this.configService.get('MYSQL_DB_USER'),
-      password: this.configService.get('MYSQL_DB_PASSWD'),
-      database: this.configService.get('MYSQL_DB_NAME'),
+      host: process.env.MYSQL_DB_HOST,
+      username: process.env.MYSQL_DB_USER,
+      password: process.env.MYSQL_DB_PASSWD,
+      database: process.env.MYSQL_DB_NAME,
       port: 3306,
       logging: true,
       entities: mysqlEntities,
@@ -33,4 +35,16 @@ export class MysqlConfig implements TypeOrmOptionsFactory {
 
     return options;
   }
+
+  options = this.createTypeOrmOptions();
+
+  createDataSource: TypeOrmDataSourceFactory =
+    async (): Promise<DataSource> => {
+      const options = await this.options;
+      const dataSource = new DataSource(options);
+      if (dataSource.isInitialized) {
+        await dataSource.destroy();
+      }
+      return dataSource;
+    };
 }
