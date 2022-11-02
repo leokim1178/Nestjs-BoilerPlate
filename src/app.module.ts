@@ -12,14 +12,18 @@ import { MongoDBConfig } from './common/config/mongodb.config';
   imports: [
     ConfigModule.forRoot({ isGlobal: true, envFilePath: ['.env'] }),
     TypeOrmModule.forRootAsync({
-      imports: [ConfigModule],
-      inject: [ConfigService],
+      name: 'postgresql_DB',
       useClass: PostgresqlConfig,
+      dataSourceFactory: () => {
+        return new PostgresqlConfig().postgresqlDataSource;
+      },
     }),
     TypeOrmModule.forRootAsync({
-      imports: [ConfigModule],
-      inject: [ConfigService],
+      name: 'mysql_DB',
       useClass: MysqlConfig,
+      dataSourceFactory: () => {
+        return new MysqlConfig().mysqlDataSource;
+      },
     }),
     MongooseModule.forRootAsync({
       imports: [ConfigModule],
@@ -27,6 +31,7 @@ import { MongoDBConfig } from './common/config/mongodb.config';
       useClass: MongoDBConfig,
     }),
   ],
+
   controllers: [AppController],
   providers: [AppService],
 })
