@@ -2,7 +2,10 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose from 'mongoose';
 
 // mongoDB example schema
-@Schema({ timestamps: { createdAt: 'createdAt', updatedAt: 'updatedAt' } })
+@Schema({
+  timestamps: { createdAt: 'createdAt', updatedAt: 'updatedAt' },
+  collection: 'users',
+})
 export class MongoUser {
   @Prop()
   name: string;
