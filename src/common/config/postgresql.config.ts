@@ -2,7 +2,8 @@ import {
   TypeOrmDataSourceFactory,
   TypeOrmOptionsFactory,
 } from '@nestjs/typeorm';
-import { PostgresEntities } from 'src/models/postgres/mysql.index';
+import { postgresEntities } from 'src/models/postgres/postgres.index';
+
 import { DataSource, DataSourceOptions } from 'typeorm';
 
 export class PostgresqlConfig implements TypeOrmOptionsFactory {
@@ -13,6 +14,7 @@ export class PostgresqlConfig implements TypeOrmOptionsFactory {
   async createTypeOrmOptions(): Promise<DataSourceOptions> {
     let options: DataSourceOptions;
     options = {
+      name: 'postgresql_db',
       type: 'postgres',
       host: process.env.PG_DB_HOST,
       username: process.env.PG_DB_USER,
@@ -21,7 +23,7 @@ export class PostgresqlConfig implements TypeOrmOptionsFactory {
       port: 5432,
       logging: true,
       autoLoadEntities: true,
-      entities: PostgresEntities,
+      entities: postgresEntities,
       // synchronize: true,
     } as DataSourceOptions;
 

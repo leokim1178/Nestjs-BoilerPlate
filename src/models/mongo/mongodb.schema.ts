@@ -1,4 +1,4 @@
-import { Prop, Schema } from '@nestjs/mongoose';
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose from 'mongoose';
 
 // mongoDB example schema
@@ -19,3 +19,4 @@ export class MongoUser {
   @Prop({ default: new Date(), type: mongoose.Schema.Types.Date })
   updatedAt: Date;
 }
+export const UserSchema = SchemaFactory.createForClass(MongoUser);
