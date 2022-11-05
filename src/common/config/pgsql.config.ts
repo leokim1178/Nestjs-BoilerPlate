@@ -6,7 +6,7 @@ import { postgresEntities } from 'src/models/postgres/postgres.index';
 
 import { DataSource, DataSourceOptions } from 'typeorm';
 
-export class PostgresqlConfig implements TypeOrmOptionsFactory {
+export class PgsqlConfig implements TypeOrmOptionsFactory {
   get postgresqlDataSource() {
     return this.createDataSource();
   }
@@ -14,7 +14,7 @@ export class PostgresqlConfig implements TypeOrmOptionsFactory {
   async createTypeOrmOptions(): Promise<DataSourceOptions> {
     let options: DataSourceOptions;
     options = {
-      name: 'postgresql_db',
+      name: 'pgsql_db',
       type: 'postgres',
       host: process.env.PG_DB_HOST,
       username: process.env.PG_DB_USER,

@@ -8,7 +8,7 @@ import { Repository } from 'typeorm';
 @Injectable()
 export class UserService {
   constructor(
-    @InjectRepository(PostgresUser, 'postgresql_db')
+    @InjectRepository(PostgresUser, 'pgsql_db')
     private readonly postgresUserRepository: Repository<PostgresUser>,
     @InjectRepository(MysqlUser, 'mysql_db')
     private readonly mysqlUserRepository: Repository<MysqlUser>,

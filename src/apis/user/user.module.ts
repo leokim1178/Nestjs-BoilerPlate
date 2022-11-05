@@ -9,7 +9,7 @@ import { UserService } from './user.service';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([PostgresUser], 'postgresql_db'),
+    TypeOrmModule.forFeature([PostgresUser], 'pgsql_db'),
     TypeOrmModule.forFeature([MysqlUser], 'mysql_db'),
     MongooseModule.forFeature([{ name: 'MongoUser', schema: UserSchema }]),
   ],
