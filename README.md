@@ -14,25 +14,27 @@
 
 ### 적용할 기술 목록
 
-- Nestjs
-  - AuthGuard
-  - ValidationPipe or Nestia
-  - ExceptionFilter
-  - CQRS
-  - message Queue
-- Graphql
-  - Hasura 연동 or EKS로 직접 배포
-- Rest-API
+- [ ] Nestjs
+  - [ ] AuthGuard
+  - [ ] ValidationPipe or Nestia
+  - [ ] ExceptionFilter
+  - [ ] CQRS
+  - [ ] message Queue
+- [ ] Graphql
+  - [ ] Hasura 연동 or EKS로 직접 배포
+- [ ] Rest-API
+
+  - [ ] swagger
   - with @nestjs/common
-  - swagger
-- DB
-  - RDB
-    - MySQL
-    - PostgresQL
-    - 동시에 여러개를 연결해보자!(될까?)
-  - MongoDB(mongoose)
-  - Redis
-- TypeORM
-- Serverless
-- Lambda vs ECS Fargate vs ECS EC2 vs EKS
+
+- [x] DB
+  - [x] RDB
+    - [x] MySQL
+    - [x] PostgresQL
+    - [x] 동시에 여러개를 연결해보기!(될까?)
+- [x] MongoDB(mongoose)
+- [ ] Redis
+- [x] TypeORM
+- [ ] Serverless
+- [ ] Lambda vs ECS Fargate vs ECS EC2 vs EKS
   - 브랜치로 나누어서 다 해볼까
