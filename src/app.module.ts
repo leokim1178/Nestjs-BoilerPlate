@@ -8,10 +8,16 @@ import { MysqlConfig } from './common/config/mysql.config';
 import { PgsqlConfig } from './common/config/pgsql.config';
 import { MongoDBConfig } from './common/config/mongodb.config';
 import { UserModule } from './apis/user/user.module';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
 
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true, envFilePath: ['.env'] }),
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'public'),
+      serveRoot: '/static',
+    }),
     TypeOrmModule.forRootAsync({
       name: 'pgsql_db',
       useClass: PgsqlConfig,
