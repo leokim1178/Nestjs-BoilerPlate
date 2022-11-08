@@ -16,7 +16,9 @@ import { join } from 'path';
     ConfigModule.forRoot({ isGlobal: true, envFilePath: ['.env'] }),
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', 'public'),
-      serveRoot: '/static',
+      serveRoot: '/hi',
+      renderPath: '/hi',
+      serveStaticOptions: {},
     }),
     TypeOrmModule.forRootAsync({
       name: 'pgsql_db',
