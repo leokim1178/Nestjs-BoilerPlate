@@ -21,13 +21,17 @@ export class HttpExceptionFilter implements ExceptionFilter {
     const response = (exception as HttpException).getResponse();
 
     const log = {
+      name: exception.name,
+      statusCode: (exception as HttpException).getStatus(),
       timestamp: new Date(),
       url: req.url,
-      response,
+      message: exception.message,
     };
 
     console.log(log);
 
-    res.status((exception as HttpException).getStatus()).json(response);
+    res
+      .status((exception as HttpException).getStatus())
+      .json({ response, timeStamp: log.timestamp });
   }
 }
