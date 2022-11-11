@@ -8,6 +8,8 @@ import { MysqlConfig } from './common/config/mysql.config';
 import { PgsqlConfig } from './common/config/pgsql.config';
 import { MongoDBConfig } from './common/config/mongodb.config';
 import { UserModule } from './apis/user/user.module';
+import { APP_FILTER } from '@nestjs/core';
+import { HttpExceptionFilter } from './common/filter/httpException.filter';
 
 @Module({
   imports: [
@@ -34,6 +36,12 @@ import { UserModule } from './apis/user/user.module';
     UserModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    {
+      provide: APP_FILTER,
+      useClass: HttpExceptionFilter,
+    },
+  ],
 })
 export class AppModule {}
