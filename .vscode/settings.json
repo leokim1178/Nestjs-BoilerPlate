@@ -1,3 +1,72 @@
 {
-  "cSpell.words": ["pgsql"]
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "gitmoji.showEmojiCode": false,
+  "gitmoji.additionalEmojis": [
+    {
+      "emoji": "🐛 BUG / ",
+      "code": ":bug:",
+      "description": "버그 수정"
+    },
+    {
+      "emoji": "🔥 DEL / ",
+      "code": ":fire:",
+      "description": "파일 삭제"
+    },
+    {
+      "emoji": "📝 DOCS / ",
+      "code": ":memo:",
+      "description": "문서 추가 및 수정"
+    },
+    {
+      "emoji": "♻️ REFACTOR / ",
+      "code": ":recycle:",
+      "description": "코드 리팩토링"
+    },
+    {
+      "emoji": "⚙️ CONFIG / ",
+      "code": ":wrench:",
+      "description": "설정 파일 추가 및 수정"
+    },
+    {
+      "emoji": "🚚 RENAME / ",
+      "code": ":truck:",
+      "description": "리소스 이동, 이름 변경"
+    },
+    {
+      "emoji": "⚡️ PERF / ",
+      "code": ":zap:",
+      "description": "성능 개선"
+    },
+    {
+      "emoji": "⏪ REVERT / ",
+      "code": ":rewind:",
+      "description": "코드 되돌리기"
+    },
+    { "emoji": "🚀 DEPLOY / ", "code": ":rocket:", "description": "배포" },
+    {
+      "emoji": "👽 EXTERNAL / ",
+      "code": ":alien:",
+      "description": "외부 API 추가 및 수정"
+    },
+    {
+      "emoji": "✨ FEAT / ",
+      "code": ":sparkles:",
+      "description": "새로운 기능 추가"
+    },
+    {
+      "emoji": "🔧 FIX / ",
+      "code": ":wrench:",
+      "description": "로직 추가 및 수정"
+    },
+    {
+      "emoji": "🔨 BUILD / ",
+      "code": ":hammer:",
+      "description": "빌드, 인프라 관련 파일 수정 (docker, sls, gitlab-ci 등)"
+    },
+    {
+      "emoji": "🧹 CHORE / ",
+      "code": ":broom:",
+      "description": "간단하고 큰 의미없는 변경사항"
+    }
+  ]
 }
