@@ -1,7 +1,8 @@
 {
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "gitmoji.showEmojiCode": false,
-  "gitmoji.additionalEmojis": [
+  "gitmoji.onlyUseCustomEmoji": true,
+  "gitmoji.addCustomEmoji": [
     {
       "emoji": "🐛 BUG / ",
       "code": ":bug:",
