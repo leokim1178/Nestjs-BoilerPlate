@@ -1,9 +1,9 @@
 #!/bin/bash
 
-if ! [ -x "$(command -v docker compose)" ]; then
-  echo 'Error: docker compose is not installed.' >&2
-  exit 1
-fi
+# if ! [ -x "$(command -v docker compose)" ]; then
+#   echo 'Error: docker compose is not installed.' >&2
+#   exit 1
+# fi
 
 domains="leo-boiler.store"
 rsa_key_size=4096
