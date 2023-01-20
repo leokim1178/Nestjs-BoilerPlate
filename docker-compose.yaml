@@ -1,0 +1,112 @@
+version: '3.8'
+
+services:
+  server:
+    image: node:18-alpine
+    container_name: server
+    working_dir: /server
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./src:/server/src
+      - ./.env:/server/.env
+    ports:
+      - 3000:3000
+    env_file:
+      - .env
+    restart: always
+    networks:
+      server-network:
+        ipv4_address: 172.20.0.20
+    depends_on:
+      - 'postgres'
+      - 'mysql'
+      - 'mongo'
+  postgres:
+    image: postgres:15
+    container_name: postgres-database
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: 1178
+      POSTGRES_USER: postgres
+      POSTGRES_DB: postgres
+      TZ: Asia/Seoul
+    restart: always
+    networks:
+      server-network:
+        ipv4_address: 172.20.0.30
+    ports:
+      - 5432:5432
+
+  mysql:
+    image: mysql:latest
+    container_name: mysql-database
+    volumes:
+      - mysql-data:/var/lib/mysql
+    environment:
+      MYSQL_DATABASE: mysql
+      MYSQL_PASSWORD: 1178
+      MYSQL_ROOT_PASSWORD: 1178
+      TZ: Asia/Seoul
+    restart: always
+    networks:
+      server-network:
+        ipv4_address: 172.20.0.40
+    ports:
+      - 3306:3306
+
+  mongo:
+    image: mongo:latest
+    container_name: mongo-database
+    volumes:
+      - mongo-data:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
+      TZ: Asia/Seoul
+    restart: always
+    networks:
+      server-network:
+        ipv4_address: 172.20.0.50
+    ports:
+      - 27017:27017
+
+  nginx:
+    networks:
+      - server-network
+    image: nginx:1.15-alpine
+    restart: unless-stopped
+    container_name: frontend
+    volumes:
+      - ./data/nginx:/etc/nginx/conf.d
+      - ./data/certbot/conf:/etc/letsencrypt
+      - ./data/certbot/www:/var/www/certbot
+    ports:
+      - '80:80'
+      - '443:443'
+    expose:
+      - '80'
+      - '443'
+    command: '/bin/sh -c ''while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g "daemon off;"'''
+
+  certbot:
+    image: certbot/certbot
+    restart: unless-stopped
+    volumes:
+      - ./data/certbot/conf:/etc/letsencrypt
+      - ./data/certbot/www:/var/www/certbot
+    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
+
+networks:
+  server-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
+
+volumes:
+  postgres-data:
+  mysql-data:
+  mongo-data:
