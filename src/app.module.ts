@@ -13,7 +13,11 @@ import { HttpExceptionFilter } from './common/exception/httpException.filter';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({ isGlobal: true, envFilePath: ['.env'] }),
+    ConfigModule.forRoot({
+      isGlobal: true,
+      envFilePath:
+        process.env.NODE_ENV == 'dev' ? '.env.development' : '.env.production',
+    }),
     TypeOrmModule.forRootAsync({
       name: 'pgsql_db',
       useClass: PgsqlConfig,
