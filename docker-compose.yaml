@@ -1,6 +1,7 @@
 version: '3.8'
 
 services:
+
   nest:
     image: node:18-alpine
     container_name: nest
@@ -65,6 +66,7 @@ services:
     restart: always
     networks:
       server-network:
+
         ipv4_address: 172.20.0.30 # custom ip address
     ports:
       - 5432:5432
@@ -80,10 +82,12 @@ services:
     restart: always
     networks:
       server-network:
+
         ipv4_address: 172.20.0.40 # custom ip address
     ports:
       - 27017:27017
     command: [--auth]
+
 
 networks:
   server-network:
