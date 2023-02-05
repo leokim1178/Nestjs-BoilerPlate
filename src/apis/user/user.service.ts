@@ -27,12 +27,8 @@ export class UserService {
     return user;
   }
 
-  async createMongoUser() {
-    const user = await this.mongoUserModel.create({
-      name: 'mongo',
-      email: 'leo@mongo.com',
-      password: 'mongo',
-    });
+  async createMongoUser(createUserInput: CreateUserInput) {
+    const user = await this.mongoUserModel.create(createUserInput);
     return user;
   }
 }

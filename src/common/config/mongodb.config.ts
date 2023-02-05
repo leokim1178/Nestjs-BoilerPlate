@@ -13,6 +13,11 @@ export class MongoDBConfig implements MongooseOptionsFactory {
   async createMongooseOptions(): Promise<MongooseModuleOptions> {
     const options: MongooseModuleOptions = {
       uri: this.configService.get('MONGO_DB_HOST'),
+      dbName: this.configService.get('MONGO_DB_NAME'),
+      user: this.configService.get('MONGO_DB_USER'),
+      pass: this.configService.get('MONGO_DB_PASSWD'),
+      // user: 'leo',
+      // pass: 'pw1234',
       autoCreate: true,
     };
     const mongoose = new Mongoose(options);
