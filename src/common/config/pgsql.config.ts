@@ -24,7 +24,7 @@ export class PgsqlConfig implements TypeOrmOptionsFactory {
       logging: true,
       autoLoadEntities: true,
       entities: postgresEntities,
-      // synchronize: true,
+      synchronize: true,
     } as DataSourceOptions;
 
     const dataSource = new DataSource(options);
