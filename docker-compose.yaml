@@ -70,7 +70,7 @@ services:
       - 5432:5432
 
   mongodb:
-    image: mongo:6
+    image: mongo:4.4
     container_name: mongodb
     volumes:
       - ./db/mongodb/data:/data/configdb

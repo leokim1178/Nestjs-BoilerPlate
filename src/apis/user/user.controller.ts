@@ -29,10 +29,11 @@ export class UserController {
     createUserInput: CreateUserInput,
   ) {
     try {
-      const pguser = await this.userService.createPostgresUser(createUserInput);
-      const mysqluser = await this.userService.createMysqlUser(createUserInput);
-      // const mongouser = await this.userService.createMongoUser();
-      return pguser;
+      await this.userService.createPostgresUser(createUserInput);
+      await this.userService.createMysqlUser(createUserInput);
+      await this.userService.createMongoUser(createUserInput);
+      const user = createUserInput;
+      return user;
     } catch (e) {
       console.log(e);
     }
