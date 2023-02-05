@@ -17,7 +17,7 @@
 - [ ] Nestjs
   - [ ] AuthGuard
   - [ ] ValidationPipe or Nestia
-  - [ ] ExceptionFilter
+  - [x] ExceptionFilter
   - [ ] CQRS
   - [ ] message Queue
 - [ ] Graphql
