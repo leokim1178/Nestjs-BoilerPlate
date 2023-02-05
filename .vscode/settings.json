@@ -1,7 +1,7 @@
 {
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "gitmoji.showEmojiCode": false,
-  "gitmoji.additionalEmojis": [
+  "gitmoji.addCustomEmoji": [
     {
       "emoji": "🐛 BUG / ",
       "code": ":bug:",
@@ -67,6 +67,11 @@
       "emoji": "🧹 CHORE / ",
       "code": ":broom:",
       "description": "간단하고 큰 의미없는 변경사항"
+    },
+    {
+      "emoji": "🎉 INIT /",
+      "code": ":init:",
+      "description": "프로젝트 시작"
     }
   ]
 }

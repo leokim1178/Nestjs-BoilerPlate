@@ -1,13 +1,15 @@
 FROM node:18-alpine
 
-WORKDIR /server/
+
+WORKDIR /nest/
 RUN apk update
 RUN apk upgrade
 RUN apk --no-cache add tzdata && \
         cp /usr/share/zoneinfo/Asia/Seoul /etc/localtime && \
         echo "Asia/Seoul" > /etc/timezone
-COPY ./package.json /server/
-COPY ./yarn.lock /server/
+COPY ./package.json ./nest/package.json
+COPY ./yarn.lock ./nest/yarn.lock
 RUN yarn install
-COPY . /server/
-CMD yarn start:dev
+COPY . /nest/
+ARG NODE_ENV
+CMD yarn start:${NODE_ENV}

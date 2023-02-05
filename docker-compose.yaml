@@ -1,16 +1,19 @@
 version: '3.8'
 
 services:
-  server:
+
+  nest:
     image: node:18-alpine
-    container_name: server
-    working_dir: /server
+    container_name: nest
+    working_dir: /nest
     build:
       context: .
       dockerfile: Dockerfile
+      args:
+        - NODE_ENV=${NODE_ENV}
     volumes:
-      - ./src:/server/src
-      - ./.env:/server/.env
+      - ./src:/nest/src
+      - ./.env:/nest/.env
     ports:
       - 3000:3000
     env_file:
@@ -18,95 +21,81 @@ services:
     restart: always
     networks:
       server-network:
-        ipv4_address: 172.20.0.20
+        ipv4_address: 172.20.0.20 # custom ip address
     depends_on:
-      - 'postgres'
       - 'mysql'
-      - 'mongo'
-  postgres:
-    image: postgres:15
-    container_name: postgres-database
+      - 'postgresql'
+      - 'mongodb'
+
+  mysql:
+    image: mysql:8.0
+    container_name: mysql
     volumes:
-      - postgres-data:/var/lib/postgresql/data
+      # 실제 물리 경로와 컨테이너 경로를 연동
+      - ./db/mysql/mysql-data:/var/lib/mysql
+      # 초기 데이터를 넣기 위한 sql 파일을 연동
+      - ./db/mysql/conf:/etc/mysql/conf.d
     environment:
-      POSTGRES_PASSWORD: 1178
-      POSTGRES_USER: postgres
-      POSTGRES_DB: postgres
+      MYSQL_DATABASE: ${MYSQL_DB_HOST}
+      MYSQL_USER: ${MYSQL_DB_USER}
+      MYSQL_PASSWORD: ${MYSQL_DB_PASSWD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_DB_ROOT_PASSWD}
       TZ: Asia/Seoul
     restart: always
     networks:
       server-network:
-        ipv4_address: 172.20.0.30
+        ipv4_address: 172.20.0.10 # custom ip address
+    ports:
+      - 3306:3306
+    command:
+      # utf8mb4 설정
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+
+  postgresql:
+    image: postgres:15.1
+    container_name: postgresql
+    volumes:
+      - ./db/postgresql/data:/var/lib/postgresql/data
+      - ./db/postgresql/data:/etc/postgresql/postgresql.conf
+    environment:
+      POSTGRES_DB: ${PG_DB_NAME}
+      POSTGRES_USER: ${PG_DB_USER}
+      POSTGRES_PASSWORD: ${PG_DB_PASSWD}
+      TZ: Asia/Seoul
+    restart: always
+    networks:
+      server-network:
+
+        ipv4_address: 172.20.0.30 # custom ip address
     ports:
       - 5432:5432
 
-  mysql:
-    image: mysql:latest
-    container_name: mysql-database
+  mongodb:
+    image: mongo:6
+    container_name: mongodb
     volumes:
-      - mysql-data:/var/lib/mysql
+      - ./db/mongodb/data:/data/configdb
+      - ./db/mongodb/data:/data/db
     environment:
-      MYSQL_DATABASE: mysql
-      MYSQL_PASSWORD: 1178
-      MYSQL_ROOT_PASSWORD: 1178
       TZ: Asia/Seoul
     restart: always
     networks:
       server-network:
-        ipv4_address: 172.20.0.40
-    ports:
-      - 3306:3306
 
-  mongo:
-    image: mongo:latest
-    container_name: mongo-database
-    volumes:
-      - mongo-data:/data/db
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: root
-      TZ: Asia/Seoul
-    restart: always
-    networks:
-      server-network:
-        ipv4_address: 172.20.0.50
+        ipv4_address: 172.20.0.40 # custom ip address
     ports:
       - 27017:27017
+    command: [--auth]
 
-  nginx:
-    networks:
-      - server-network
-    image: nginx:1.15-alpine
-    restart: unless-stopped
-    container_name: frontend
-    volumes:
-      - ./data/nginx:/etc/nginx/conf.d
-      - ./data/certbot/conf:/etc/letsencrypt
-      - ./data/certbot/www:/var/www/certbot
-    ports:
-      - '80:80'
-      - '443:443'
-    expose:
-      - '80'
-      - '443'
-    command: '/bin/sh -c ''while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g "daemon off;"'''
-
-  certbot:
-    image: certbot/certbot
-    restart: unless-stopped
-    volumes:
-      - ./data/certbot/conf:/etc/letsencrypt
-      - ./data/certbot/www:/var/www/certbot
-    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
 
 networks:
   server-network:
     driver: bridge
     ipam:
       config:
-        - subnet: 172.20.0.0/16
+        - subnet: 172.20.0.0/16 # 서브넷 설정
 
 volumes:
-  postgres-data:
   mysql-data:
   mongo-data:

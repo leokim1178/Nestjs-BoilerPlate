@@ -34,5 +34,11 @@ lerna-debug.log*
 !.vscode/launch.json
 !.vscode/extensions.json
 
+# DB files
+# 개발시 사용하는 DB 파일
+db/*
+
 # ENV
-.env
+# 개발시 환경변수 ignore 활성화할것
+# .env
+# .env.development
