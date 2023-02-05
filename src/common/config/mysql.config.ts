@@ -23,7 +23,7 @@ export class MysqlConfig implements TypeOrmOptionsFactory {
       logging: true,
       entities: mysqlEntities,
       autoLoadEntities: true,
-      // synchronize: true,
+      synchronize: true,
     } as DataSourceOptions;
 
     const dataSource = new DataSource(options);

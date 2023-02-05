@@ -4,7 +4,6 @@ export const swaggerOptions = new DocumentBuilder()
   .setTitle('NestJS Boilerplate')
   .setDescription('NestJS Boilerplate API description')
   .setVersion('1.0')
-  .addTag('nestjs-boilerplate')
   .addBearerAuth({
     type: 'http',
     scheme: 'bearer',

@@ -4,6 +4,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { MysqlUser } from 'src/models/mysql/entities/user.entities';
 import { PostgresUser } from 'src/models/postgres/entities/user.entities';
 import { Repository } from 'typeorm';
+import { CreateUserInput } from './dto/createUser.dto';
 
 @Injectable()
 export class UserService {
@@ -16,25 +17,13 @@ export class UserService {
     private readonly mongoUserModel,
   ) {}
 
-  async createPostgresUser() {
-    const user = await this.postgresUserRepository.save({
-      name: 'postgres',
-      email: 'leo@postgres.com',
-      age: 18,
-      role: 'postgres',
-      password: 'postgres',
-    });
+  async createPostgresUser(createUserInput: CreateUserInput) {
+    const user = await this.postgresUserRepository.save(createUserInput);
     return user;
   }
 
-  async createMysqlUser() {
-    const user = await this.mysqlUserRepository.save({
-      name: 'mysql',
-      email: 'leo@mysql.com',
-      age: 18,
-      role: 'mysql',
-      password: 'mysql',
-    });
+  async createMysqlUser(createUserInput: CreateUserInput) {
+    const user = await this.mysqlUserRepository.save(createUserInput);
     return user;
   }
 
