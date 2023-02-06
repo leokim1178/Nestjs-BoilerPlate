@@ -1,10 +1,14 @@
+import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { APP_FILTER } from '@nestjs/core';
+import { GraphQLModule } from '@nestjs/graphql';
 import { MongooseModule } from '@nestjs/mongoose';
 import { TypeOrmModule } from '@nestjs/typeorm';
+
 import { UserModule } from './apis/user/user.module';
 import { AppController } from './app.controller';
+import { AppResolver } from './app.resolver';
 import { AppService } from './app.service';
 import { MongoDBConfig } from './common/config/mongodb.config';
 import { MysqlConfig } from './common/config/mysql.config';
@@ -37,11 +41,18 @@ import { HttpExceptionFilter } from './common/exception/httpException.filter';
       inject: [ConfigService],
       useClass: MongoDBConfig,
     }),
+    GraphQLModule.forRoot<ApolloDriverConfig>({
+      driver: ApolloDriver,
+      playground: true,
+      context: ({ req }) => ({ req }),
+      autoSchemaFile: '/src/common/graphql/schema/schema.gql',
+    }),
     UserModule,
   ],
   controllers: [AppController],
   providers: [
     AppService,
+    AppResolver,
     {
       provide: APP_FILTER,
       useClass: HttpExceptionFilter,

@@ -23,13 +23,17 @@
     "docker:logs": "docker compose logs -f"
   },
   "dependencies": {
+    "@nestjs/apollo": "^10.1.7",
     "@nestjs/common": "^9.0.0",
     "@nestjs/config": "^2.2.0",
     "@nestjs/core": "^9.0.0",
+    "@nestjs/graphql": "^10.1.7",
     "@nestjs/mongoose": "^9.2.0",
     "@nestjs/platform-express": "^9.0.0",
     "@nestjs/swagger": "^6.1.4",
     "@nestjs/typeorm": "^9.0.1",
+    "apollo-server-express": "^3.11.1",
+    "graphql": "^16.6.0",
     "mongoose": "^6.7.0",
     "mysql2": "^2.3.3",
     "pg": "^8.8.0",

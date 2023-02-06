@@ -16,8 +16,6 @@ export class MongoDBConfig implements MongooseOptionsFactory {
       dbName: this.configService.get('MONGO_DB_NAME'),
       user: this.configService.get('MONGO_DB_USER'),
       pass: this.configService.get('MONGO_DB_PASSWD'),
-      // user: 'leo',
-      // pass: 'pw1234',
       autoCreate: true,
     };
     const mongoose = new Mongoose(options);
