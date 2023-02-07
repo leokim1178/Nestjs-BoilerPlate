@@ -24,7 +24,7 @@
   - [ ] Hasura 연동 or EKS로 직접 배포
 - [ ] Rest-API
 
-  - [ ] swagger
+  - [x] swagger
   - with @nestjs/common
 
 - [x] DB
@@ -37,4 +37,3 @@
 - [x] TypeORM
 - [ ] Serverless
 - [ ] Lambda vs ECS Fargate vs ECS EC2 vs EKS
-  - 브랜치로 나누어서 다 해볼까
