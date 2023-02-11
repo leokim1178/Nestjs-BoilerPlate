@@ -5,6 +5,7 @@ import { APP_FILTER } from '@nestjs/core';
 import { GraphQLModule } from '@nestjs/graphql';
 import { MongooseModule } from '@nestjs/mongoose';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import * as Joi from 'joi';
 
 import { UserModule } from './apis/user/user.module';
 import { AppController } from './app.controller';
@@ -21,6 +22,22 @@ import { HttpExceptionFilter } from './common/exception/httpException.filter';
       isGlobal: true,
       envFilePath:
         process.env.NODE_ENV == 'dev' ? '.env.development' : '.env.production',
+      validationSchema: Joi.object({
+        NODE_ENV: Joi.string().valid('dev', 'prod').default('dev'),
+        PG_DB_HOST: Joi.string().required(),
+        PG_DB_USER: Joi.string().required(),
+        PG_DB_PASSWD: Joi.string().required(),
+        PG_DB_NAME: Joi.string().required(),
+        MYSQL_DB_HOST: Joi.string().required(),
+        MYSQL_DB_USER: Joi.string().required(),
+        MYSQL_DB_PASSWD: Joi.string().required(),
+        MYSQL_DB_ROOT_PASSWD: Joi.string().required(),
+        MYSQL_DB_NAME: Joi.string().required(),
+        MONGO_DB_HOST: Joi.string().required(),
+        MONGO_DB_USER: Joi.string().required(),
+        MONGO_DB_PASSWD: Joi.string().required(),
+        MONGO_DB_NAME: Joi.string().required(),
+      }),
     }),
     TypeOrmModule.forRootAsync({
       name: 'pgsql_db',
