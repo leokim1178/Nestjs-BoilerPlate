@@ -20,7 +20,8 @@
     "docker:down": "docker compose down",
     "docker:clean": "docker system prune -a && docker volume prune && docker network prune",
     "docker:rebuild": "docker compose down && docker compose build && docker compose up -d",
-    "docker:logs": "docker compose logs -f"
+    "docker:logs": "docker compose logs -f",
+    "ssh": "ssh -i ~/leo-test.pem root@221.168.37.9"
   },
   "dependencies": {
     "@nestjs/apollo": "^10.1.7",
