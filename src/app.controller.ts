@@ -1,4 +1,4 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, NotFoundException } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { AppService } from './app.service';
 
@@ -13,5 +13,13 @@ export class AppController {
   })
   getHello(): string {
     return this.appService.getHello();
+  }
+
+  @Get('error')
+  @ApiOperation({
+    summary: 'error',
+  })
+  getError(): string {
+    throw new NotFoundException('error');
   }
 }
