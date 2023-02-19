@@ -4,9 +4,12 @@ import { SwaggerModule } from '@nestjs/swagger';
 import { AppModule } from './app.module';
 import { swaggerOptions } from './common/config/swagger.config';
 import { HttpExceptionFilter } from './common/exception/httpException.filter';
+import { TemplateLogger } from './common/logger/logger';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, {
+    logger: new TemplateLogger(),
+  });
   app.useGlobalFilters(new HttpExceptionFilter());
   const document = SwaggerModule.createDocument(app, swaggerOptions);
   SwaggerModule.setup('api', app, document);
