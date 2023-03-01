@@ -1,4 +1,4 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Post } from '@nestjs/common';
 import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { CreateUserInput, CreateUserOutput } from './dto/createUser.dto';
 
@@ -32,10 +32,12 @@ export class UserController {
       await this.userService.createPostgresUser(createUserInput);
       await this.userService.createMysqlUser(createUserInput);
       await this.userService.createMongoUser(createUserInput);
-      const user = createUserInput;
-      return user;
+      return {
+        status: 200,
+        message: 'User Created',
+      };
     } catch (e) {
-      console.log(e);
+      throw new BadRequestException('Bad Dto');
     }
   }
 }
